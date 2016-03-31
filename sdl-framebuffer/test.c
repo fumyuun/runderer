@@ -2,6 +2,9 @@
 
 #include "framebuffer.h"
 #include "SDL.h"
+#include "../vertex/vertex.h"
+
+#define rgb_to_565(r, g, b) ((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 
 int main (int argc, char **argv) {
     int error;
@@ -13,8 +16,11 @@ int main (int argc, char **argv) {
         printf("Error code: %d\n", error);
     }
 
-    framebuffer_rect(&fb, 100, 100, 100, 100, 0x0000FF);
-    framebuffer_rect(&fb, 300, 300, 100, 100, 0x00F000);
+    vertex2i_t p1 = {200, 100};
+    vertex2i_t p2 = {300, 300};
+    vertex2i_t p3 = {100, 300};
+
+    framebuffer_triangle(&fb, p1, p2, p3, rgb_to_565(0x00, 0xFF, 0x00));
 
     framebuffer_flip(&fb);
 

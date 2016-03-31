@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include <stdint.h>
+#include "../vertex/vertex.h"
 
 typedef struct {
     unsigned int width;
@@ -21,5 +22,9 @@ void framebuffer_quit(framebuffer_t *fb);
 void framebuffer_flip(framebuffer_t *fb);
 
 void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, int color);
+
+void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned int color);
+
+void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
 
 #endif /* FRAMEBUFFER_H */

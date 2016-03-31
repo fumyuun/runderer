@@ -59,3 +59,45 @@ void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, in
         }
     }
 }
+
+void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned int color) {
+    // bresenham, based on wikipedia example
+    #define line_gen(ptr) {\
+        for (x = pmin[0]; x < pmax[0]; ++x) {\
+            ptr[y*fb->width + x] = color;\
+            error += deltaerr;\
+            while (error > 0.5f) {\
+                ptr[y*fb->width + x] = color;\
+                y += ycorr;\
+                error -= 1.0f;\
+            }\
+        }\
+    }
+    // sort points according to x position
+    int *pmin = p1;
+    int *pmax = p2;
+
+    if (p1[0] > p2[0]) {
+        pmin = p2;
+        pmax = p1;
+
+    }
+
+    int deltax = abs(pmax[0] - pmin[0]);
+    int deltay = abs(pmax[1] - pmin[1]);
+    int ycorr = (pmax[1] - pmin[1]) > 0 ? 1 : -1;
+    float error = 0.0;
+
+    float deltaerr = ((float)deltay / (float)deltax);
+
+    int x;
+    int y = pmin[1];
+
+    line_gen(fb->buf16);
+}
+
+void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color) {
+    framebuffer_line(fb, p1, p2, color);
+    framebuffer_line(fb, p2, p3, color);
+    framebuffer_line(fb, p3, p1, color);
+}
