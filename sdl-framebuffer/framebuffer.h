@@ -3,7 +3,7 @@
 
 #include "SDL.h"
 #include <stdint.h>
-#include "../vertex/vertex.h"
+#include "vertex.h"
 
 typedef struct {
     unsigned int width;

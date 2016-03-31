@@ -1,4 +1,4 @@
-CFLAGS=$(shell sdl2-config --cflags)
+CFLAGS=$(shell sdl2-config --cflags) -I../include
 LDFLAGS=$(shell sdl2-config --libs)
 
 test:	test.c framebuffer.o

@@ -2,7 +2,7 @@
 
 #include "framebuffer.h"
 #include "SDL.h"
-#include "../vertex/vertex.h"
+#include "vertex.h"
 
 #define rgb_to_565(r, g, b) ((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 
