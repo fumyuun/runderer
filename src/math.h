@@ -21,4 +21,10 @@ void math_cross3f(vertex3f_t u, vertex3f_t v, vertex3f_t result);
  */
 void math_barycentric(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, vertex3f_t result);
 
+void math_normal(vertex3f_t a, vertex3f_t b, vertex3f_t c, vertex3f_t result);
+
+void math_normalize(vertex3f_t v);
+
+float math_dotproduct(vertex3f_t u, vertex3f_t v);
+
 #endif /* MATH_H */

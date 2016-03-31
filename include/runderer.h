@@ -16,6 +16,7 @@
 typedef struct {
     framebuffer_t* framebuffer;
     ZBUF_TYPE *zbuffer;
+    vertex3f_t light_direction;
 } runderer_t;
 
 /**
@@ -38,6 +39,7 @@ void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t
 
 /**
  * \brief Draw a filled triangle between three three-dimensional points
+ * with a constant color.
  * \param fb a pointer to the framebuffer driver
  * \param p1 the first point
  * \param p2 the second point
@@ -45,5 +47,17 @@ void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t
  * \param color the color of the triangle, in 5R6G5B color format
  */
 void runderer_trianglef(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, unsigned int color);
+
+/**
+ * \brief Draw a filled triangle between three three-dimensional points, using
+ * a simple flat shaded color.
+ * \param fb a pointer to the framebuffer driver
+ * \param p1 the first point
+ * \param p2 the second point
+ * \param p3 the third point
+ * \param color the color of the triangle, in 5R6G5B color format
+ */
+void runderer_triangle_flat(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, vertex3f_t color);
+
 
 #endif

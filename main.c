@@ -29,13 +29,15 @@ int main (int argc, char **argv) {
     vertex3f_t t1_p1 = {200.0f, 100.0f, 10.0f};
     vertex3f_t t1_p2 = {300.0f, 300.0f, 10.0f};
     vertex3f_t t1_p3 = {100.0f, 300.0f, 0.0f};
+    vertex3f_t t1_col = {0.0f, 1.0f, 0.0f};
 
     vertex3f_t t2_p1 = {250.0f, 150.0f, 0.0f};
-    vertex3f_t t2_p2 = {350.0f, 350.0f, 10.0f};
-    vertex3f_t t2_p3 = {150.0f, 350.0f, 20.0f};
+    vertex3f_t t2_p2 = {350.0f, 350.0f, 100.0f};
+    vertex3f_t t2_p3 = {150.0f, 350.0f, 100.0f};
+    vertex3f_t t2_col = {0.0f, 1.0f, 0.0f};
 
-    runderer_trianglef(&run, t1_p1, t1_p2, t1_p3, rgb_to_565(0x00, 0xFF, 0x00));
-    runderer_trianglef(&run, t2_p1, t2_p2, t2_p3, rgb_to_565(0xFF, 0xFF, 0xFF));
+    runderer_triangle_flat(&run, t1_p1, t1_p2, t1_p3, t1_col);
+    runderer_triangle_flat(&run, t2_p1, t2_p2, t2_p3, t2_col);
 
     framebuffer_flip(&fb);
 
