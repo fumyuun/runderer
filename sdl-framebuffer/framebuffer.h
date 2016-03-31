@@ -27,4 +27,6 @@ void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned 
 
 void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
 
+void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
+
 #endif /* FRAMEBUFFER_H */

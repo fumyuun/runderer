@@ -20,7 +20,8 @@ int main (int argc, char **argv) {
     vertex2i_t p2 = {300, 300};
     vertex2i_t p3 = {100, 300};
 
-    framebuffer_triangle(&fb, p1, p2, p3, rgb_to_565(0x00, 0xFF, 0x00));
+    framebuffer_trianglef(&fb, p1, p2, p3, rgb_to_565(0x00, 0xFF, 0x00));
+    framebuffer_triangle(&fb, p1, p2, p3, rgb_to_565(0xFF, 0xFF, 0xFF));
 
     framebuffer_flip(&fb);
 

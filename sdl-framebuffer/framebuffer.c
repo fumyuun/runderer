@@ -101,3 +101,18 @@ void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, verte
     framebuffer_line(fb, p2, p3, color);
     framebuffer_line(fb, p3, p1, color);
 }
+
+void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color) {
+    vertex3f_t bc;
+    vertex2i_t p;
+    for (int y = 0; y < fb->height; ++y) {
+        for (int x = 0; x < fb->width; ++x) {
+            p[0] = x;
+            p[1] = y;
+            math_barycentric(p1, p2, p3, p, bc);
+            if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
+                fb->buf16[y * fb->width + x] = color;
+            }
+        }
+    }
+}
