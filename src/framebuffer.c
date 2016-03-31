@@ -2,12 +2,16 @@
 #include "math.h"
 #include <stdio.h>
 
+static int framebuffers_active = 0;
+
 int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height) {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    // Initialize SDL if we're the first framebuffer active
+    if (framebuffers_active++ == 0 && SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("Couldnt initialize SDL\n");
         return 1;
     }
 
+    // allocate a window
     fb->window = SDL_CreateWindow("framebuffer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     if (fb->window == NULL) {
         printf("Couldnt create a window\n");
@@ -15,6 +19,7 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
         return 2;
     }
 
+    // get a pointer to the windows' surface too
     fb->win_surface = SDL_GetWindowSurface(fb->window);
     if (fb->win_surface == NULL) {
         printf("Couldnt access the window surface?\n");
@@ -23,6 +28,7 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
         return 3;
     }
 
+    // allocate a 16 bits buffer surface
     fb->win_buf = SDL_CreateRGBSurface(0, width, height, 16, 0, 0, 0, 0);
     if (fb->win_buf == NULL) {
         printf("Couldnt create an extra buffer\n");
@@ -44,7 +50,10 @@ void framebuffer_quit(framebuffer_t *fb) {
     if (fb != NULL) {
         SDL_FreeSurface(fb->win_buf);
         SDL_DestroyWindow(fb->window);
-        SDL_Quit();
+        // If we're the last framebuffer device, free stuff
+        if (framebuffers_active-- == 1) {
+            SDL_Quit();
+        }
     }
 }
 
