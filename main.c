@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "framebuffer.h"
+#include "runderer.h"
 #include "SDL.h"
 #include "vertex.h"
 
@@ -9,23 +10,38 @@
 int main (int argc, char **argv) {
     int error;
     framebuffer_t fb;
+    runderer_t run;
 
     error = framebuffer_init(&fb, 640, 480);
 
     if (error != 0) {
-        printf("Error code: %d\n", error);
+        printf("FB error code: %d\n", error);
+        return 1;
     }
 
-    vertex2i_t p1 = {200, 100};
-    vertex2i_t p2 = {300, 300};
-    vertex2i_t p3 = {100, 300};
+    error = runderer_bind(&run, &fb);
 
-    framebuffer_trianglef(&fb, p1, p2, p3, rgb_to_565(0x00, 0xFF, 0x00));
-    framebuffer_triangle(&fb, p1, p2, p3, rgb_to_565(0xFF, 0xFF, 0xFF));
+    if (error != 0) {
+        printf("Runderer error code: %d\n", error);
+        return 2;
+    }
+
+    vertex3f_t t1_p1 = {200.0f, 100.0f, 10.0f};
+    vertex3f_t t1_p2 = {300.0f, 300.0f, 10.0f};
+    vertex3f_t t1_p3 = {100.0f, 300.0f, 0.0f};
+
+    vertex3f_t t2_p1 = {250.0f, 150.0f, 0.0f};
+    vertex3f_t t2_p2 = {350.0f, 350.0f, 10.0f};
+    vertex3f_t t2_p3 = {150.0f, 350.0f, 20.0f};
+
+    runderer_trianglef(&run, t1_p1, t1_p2, t1_p3, rgb_to_565(0x00, 0xFF, 0x00));
+    runderer_trianglef(&run, t2_p1, t2_p2, t2_p3, rgb_to_565(0xFF, 0xFF, 0xFF));
 
     framebuffer_flip(&fb);
 
     SDL_Delay(2000);
 
     framebuffer_quit(&fb);
+
+    return 0;
 }

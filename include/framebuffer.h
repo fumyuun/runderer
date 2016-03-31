@@ -35,6 +35,7 @@ typedef struct {
  * \param fb a pointer to the framebuffer driver
  * \param width the width of the framebuffer
  * \param height the height of the framebuffer
+ * \return 0 if succesful, nonzero otherwise
  */
 int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height);
 
@@ -72,7 +73,7 @@ void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, in
 void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned int color);
 
 /**
- * \brief Draw a triangle between three points
+ * \brief Draw a triangle between three two-dimensional points
  * \param fb a pointer to the framebuffer driver
  * \param p1 the first point
  * \param p2 the second point
@@ -82,7 +83,7 @@ void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned 
 void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
 
 /**
- * \brief Draw a filled triangle between three points
+ * \brief Draw a filled triangle between three two-dimensional points
  * \param fb a pointer to the framebuffer driver
  * \param p1 the first point
  * \param p2 the second point
