@@ -1,9 +1,7 @@
-CFLAGS=$(shell sdl2-config --cflags) -I../include
+CFLAGS=$(shell sdl2-config --cflags) -Iinclude
 LDFLAGS=$(shell sdl2-config --libs)
 
-test:	test.c framebuffer.o math.o
+main:	main.c framebuffer.o math.o
 
-framebuffer.o: framebuffer.c framebuffer.h
-
-math.o: ../math/math.c
+%.o:	src/%.c
 	$(CC) -c -o $@ $^ $(CFLAGS)

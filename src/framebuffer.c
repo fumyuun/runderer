@@ -1,4 +1,5 @@
 #include "framebuffer.h"
+#include "math.h"
 #include <stdio.h>
 
 int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height) {
