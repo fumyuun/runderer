@@ -10,7 +10,7 @@ void math_cross3f(vertex3f_t u, vertex3f_t v, vertex3f_t result) {
     result[2] = u[0] * v[1] - u[1] * v[0];
 }
 
-void math_barycentric(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, vertex3f_t result) {
+void math_barycentric2i(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, vertex3f_t result) {
     vertex3f_t x;
     vertex3f_t y;
     vertex3f_t cross;
@@ -34,6 +34,14 @@ void math_barycentric(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, ve
     result[0] = 1.0f - (cross[0] + cross[1]) / cross[2];
     result[1] = cross[1] / cross[2];
     result[2] = cross[0] / cross[2];
+}
+
+void math_barycentric3f(vertex3f_t a, vertex3f_t b, vertex3f_t c, vertex3f_t p, vertex3f_t result) {
+    vertex2i_t a2 = {a[0], a[1]},
+               b2 = {b[0], b[1]},
+               c2 = {c[0], c[1]},
+               p2 = {p[0], p[1]};
+    return math_barycentric2i(a2, b2, c2, p2, result);
 }
 
 void math_normal(vertex3f_t a, vertex3f_t b, vertex3f_t c, vertex3f_t result) {

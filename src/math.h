@@ -19,7 +19,8 @@ void math_cross3f(vertex3f_t u, vertex3f_t v, vertex3f_t result);
  * \param p the point of who's coordinates to calculate
  * \param result the vector to store the result in
  */
-void math_barycentric(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, vertex3f_t result);
+void math_barycentric2i(vertex2i_t a, vertex2i_t b, vertex2i_t c, vertex2i_t p, vertex3f_t result);
+void math_barycentric3f(vertex3f_t a, vertex3f_t b, vertex3f_t c, vertex3f_t p, vertex3f_t result);
 
 /**
  * \brief Compute the face normal of a triangle

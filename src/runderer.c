@@ -51,12 +51,6 @@ void runderer_trianglef(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_
     float intensity;    // the light intensity
     unsigned int color_shaded;  // the shaded color, linearly interpolated over intensity (for now)
 
-    // throw away the z coordinate for our current barycentric function
-    vertex2i_t pi;
-    vertex2i_t  pi1 = {p1[0], p1[1]},
-                pi2 = {p2[0], p2[1]},
-                pi3 = {p3[0], p3[1]};
-
     // compute and normalize our face normal
     math_normal(p1, p2, p3, normal);
     math_normalize(normal);
@@ -81,10 +75,9 @@ void runderer_trianglef(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_
         for (int x = 0; x < run->framebuffer->width; ++x) {
             p[0] = x;
             p[1] = y;
-            pi[0] = x;
-            pi[1] = y;
+            p[2] = 0;
             // if any component of the bc coordinates is negative, the point is not inside the triangle
-            math_barycentric(pi1, pi2, pi3, pi, bc);
+            math_barycentric3f(p1, p2, p3, p, bc);
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 p[2] = p1[2] * bc[0] + p2[2] * bc[1] + p3[2] * bc[2];
                 // calculate and update it's z-coordinate and do a z-buffer test

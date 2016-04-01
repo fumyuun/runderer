@@ -121,7 +121,7 @@ void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vert
             p[0] = x;
             p[1] = y;
             // if any component of the bc coordinates is negative, the point is outside the triangle
-            math_barycentric(p1, p2, p3, p, bc);
+            math_barycentric2i(p1, p2, p3, p, bc);
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 fb->buf16[y * fb->width + x] = color;
             }
