@@ -3,7 +3,7 @@
 #include "framebuffer.h"
 #include "runderer.h"
 #include "SDL.h"
-#include "vertex.h"
+#include "vector.h"
 
 #define rgb_to_565(r, g, b) ((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 
@@ -26,15 +26,15 @@ int main (int argc, char **argv) {
         return 2;
     }
 
-    vertex3f_t t1_p1 = {200.0f, 100.0f, 10.0f};
-    vertex3f_t t1_p2 = {300.0f, 300.0f, 10.0f};
-    vertex3f_t t1_p3 = {100.0f, 300.0f, 0.0f};
-    vertex3f_t t1_col = {0.0f, 1.0f, 0.0f};
+    vec3f_t t1_p1 = {200.0f, 100.0f, 10.0f};
+    vec3f_t t1_p2 = {300.0f, 300.0f, 10.0f};
+    vec3f_t t1_p3 = {100.0f, 300.0f, 0.0f};
+    vec3f_t t1_col = {0.0f, 1.0f, 0.0f};
 
-    vertex3f_t t2_p1 = {250.0f, 150.0f, 0.0f};
-    vertex3f_t t2_p2 = {350.0f, 350.0f, 100.0f};
-    vertex3f_t t2_p3 = {150.0f, 350.0f, 100.0f};
-    vertex3f_t t2_col = {0.0f, 1.0f, 0.0f};
+    vec3f_t t2_p1 = {250.0f, 150.0f, 0.0f};
+    vec3f_t t2_p2 = {350.0f, 350.0f, 100.0f};
+    vec3f_t t2_p3 = {150.0f, 350.0f, 100.0f};
+    vec3f_t t2_col = {0.0f, 1.0f, 0.0f};
 
     runderer_trianglef(&run, t1_p1, t1_p2, t1_p3, t1_col);
     runderer_trianglef(&run, t2_p1, t2_p2, t2_p3, t2_col);

@@ -9,14 +9,14 @@
  */
 
 #include "framebuffer.h"
-#include "vertex.h"
+#include "vector.h"
 
 #define ZBUF_TYPE float
 
 typedef struct {
     framebuffer_t* framebuffer;
     ZBUF_TYPE *zbuffer;
-    vertex3f_t light_direction;
+    vec3f_t light_direction;
 } runderer_t;
 
 /**
@@ -35,7 +35,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb);
  * \param p3 the third point
  * \param color the color of the triangle, in 5R6G5B color format
  */
-void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, unsigned int color);
+void runderer_triangle(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, unsigned int color);
 
 /**
  * \brief Draw a filled triangle between three three-dimensional points, using
@@ -46,7 +46,7 @@ void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t
  * \param p3 the third point
  * \param color the color of the triangle
  */
-void runderer_trianglef(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, vertex3f_t color);
+void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec3f_t color);
 
 
 #endif

@@ -17,7 +17,7 @@
 
 #include "SDL.h"
 #include <stdint.h>
-#include "vertex.h"
+#include "vector.h"
 
 typedef struct {
     unsigned int width;
@@ -70,7 +70,7 @@ void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, in
  * \param p2 the second point
  * \param color the color of the line, in 5R6G5B color format
  */
-void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned int color);
+void framebuffer_line(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, unsigned int color);
 
 /**
  * \brief Draw a triangle between three two-dimensional points
@@ -80,7 +80,7 @@ void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned 
  * \param p3 the third point
  * \param color the color of the triangle, in 5R6G5B color format
  */
-void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
+void framebuffer_triangle(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color);
 
 /**
  * \brief Draw a filled triangle between three two-dimensional points
@@ -90,6 +90,6 @@ void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, verte
  * \param p3 the third point
  * \param color the color of the triangle, in 5R6G5B color format
  */
-void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color);
+void framebuffer_trianglef(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color);
 
 #endif /* FRAMEBUFFER_H */

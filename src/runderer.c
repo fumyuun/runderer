@@ -31,7 +31,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
  * \param p3 the third point
  * \param color the color of the triangle, in 5R6G5B color format
  */
-void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, unsigned int color) {
+void runderer_triangle(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, unsigned int color) {
     printf("Stub called :(\n");
 }
 
@@ -44,10 +44,10 @@ void runderer_triangle(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t
  * \param p3 the third point
  * \param color the color of the triangle
  */
-void runderer_trianglef(runderer_t *run, vertex3f_t p1, vertex3f_t p2, vertex3f_t p3, vertex3f_t color) {
-    vertex3f_t p;       // the current point to consider rasterizing
-    vertex3f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
-    vertex3f_t normal;  // the face normal of triangle p1p2p3
+void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec3f_t color) {
+    vec3f_t p;       // the current point to consider rasterizing
+    vec3f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
+    vec3f_t normal;  // the face normal of triangle p1p2p3
     float intensity;    // the light intensity
     unsigned int color_shaded;  // the shaded color, linearly interpolated over intensity (for now)
 

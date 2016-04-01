@@ -71,7 +71,7 @@ void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, in
     }
 }
 
-void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned int color) {
+void framebuffer_line(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, unsigned int color) {
     // bresenham, based on wikipedia example
     #define line_gen(ptr) {\
         for (x = pmin[0]; x < pmax[0]; ++x) {\
@@ -107,15 +107,15 @@ void framebuffer_line(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, unsigned 
     line_gen(fb->buf16);
 }
 
-void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color) {
+void framebuffer_triangle(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color) {
     framebuffer_line(fb, p1, p2, color);
     framebuffer_line(fb, p2, p3, color);
     framebuffer_line(fb, p3, p1, color);
 }
 
-void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color) {
-    vertex2i_t p;   // the current point to check
-    vertex3f_t bc;  // the barycentric coordinates of point p
+void framebuffer_trianglef(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color) {
+    vec2i_t p;   // the current point to check
+    vec3f_t bc;  // the barycentric coordinates of point p
     for (int y = 0; y < fb->height; ++y) {
         for (int x = 0; x < fb->width; ++x) {
             p[0] = x;
