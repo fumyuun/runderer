@@ -5,3 +5,8 @@ main:	main.c framebuffer.o math.o runderer.o
 
 %.o:	src/%.c
 	$(CC) -c -o $@ $^ $(CFLAGS)
+
+.PHONY: clean
+
+clean:
+	rm -f *.o
