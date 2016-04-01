@@ -58,6 +58,7 @@ void framebuffer_quit(framebuffer_t *fb) {
 }
 
 void framebuffer_flip(framebuffer_t *fb) {
+    // blit our 16-bit buffer on the window and update it
     SDL_BlitSurface(fb->win_buf, NULL, fb->win_surface, NULL);
     SDL_UpdateWindowSurface(fb->window);
 }
@@ -113,12 +114,13 @@ void framebuffer_triangle(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, verte
 }
 
 void framebuffer_trianglef(framebuffer_t *fb, vertex2i_t p1, vertex2i_t p2, vertex2i_t p3, unsigned int color) {
-    vertex3f_t bc;
-    vertex2i_t p;
+    vertex2i_t p;   // the current point to check
+    vertex3f_t bc;  // the barycentric coordinates of point p
     for (int y = 0; y < fb->height; ++y) {
         for (int x = 0; x < fb->width; ++x) {
             p[0] = x;
             p[1] = y;
+            // if any component of the bc coordinates is negative, the point is outside the triangle
             math_barycentric(p1, p2, p3, p, bc);
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 fb->buf16[y * fb->width + x] = color;

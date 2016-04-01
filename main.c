@@ -36,8 +36,8 @@ int main (int argc, char **argv) {
     vertex3f_t t2_p3 = {150.0f, 350.0f, 100.0f};
     vertex3f_t t2_col = {0.0f, 1.0f, 0.0f};
 
-    runderer_triangle_flat(&run, t1_p1, t1_p2, t1_p3, t1_col);
-    runderer_triangle_flat(&run, t2_p1, t2_p2, t2_p3, t2_col);
+    runderer_trianglef(&run, t1_p1, t1_p2, t1_p3, t1_col);
+    runderer_trianglef(&run, t2_p1, t2_p2, t2_p3, t2_col);
 
     framebuffer_flip(&fb);
 
