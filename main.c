@@ -32,22 +32,22 @@ int main (int argc, char **argv) {
     vertex_t vert[6] = {
         {
             .position = {200.0f, 100.0f, 10.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+            .color    = {1.0f, 0.0f, 0.0f, 1.0f}
         },{
             .position = {300.0f, 300.0f, 10.0f, 1.0f},
             .color    = {0.0f, 1.0f, 0.0f, 1.0f}
         },{
             .position = {100.0f, 300.0f, 0.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+            .color    = {0.0f, 0.0f, 1.0f, 1.0f}
         },{
             .position = {250.0f, 150.0f, 0.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+            .color    = {0.0f, 1.0f, 1.0f, 1.0f}
         },{
             .position = {350.0f, 350.0f, 100.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+            .color    = {0.0f, 1.0f, 1.0f, 1.0f}
         },{
             .position = {150.0f, 350.0f, 100.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+            .color    = {1.0f, 1.0f, 0.0f, 1.0f}
         }
     };
 
