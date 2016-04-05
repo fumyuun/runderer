@@ -1,5 +1,6 @@
 #include "runderer.h"
 #include "math.h"
+#include "matrix.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <float.h>
@@ -114,4 +115,22 @@ void runderer_draw_triangle_array(runderer_t* self, const vertex_t* vertices, ui
 		uint const frags_drawn = (uint)(end - begin);
 		self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
 	}
+}
+
+stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix)
+{
+	vec4f_t world_pos;
+	mat_mult_vec4f(model_matrix, vertex.position, world_pos);
+	vec4f_t view_pos;
+	mat_mult_vec4f(view_matrix, world_pos, view_pos);
+	vec4f_t screen_pos;
+	mat_mult_vec4f(projection_matrix, view_pos, screen_pos);
+	vec3f_t result_pos = {screen_pos[0], screen_pos[1], screen_pos[2]};
+
+	stream_t result = {
+		.color = { vertex.color[0], vertex.color[1], vertex.color[2], vertex.color[3] },
+		.position = { result_pos[0], result_pos[1], result_pos[2] },
+	};
+
+	return result;
 }

@@ -81,6 +81,7 @@ void runderer_triangle(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, unsi
  */
 void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec3f_t color);
 
+stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix);
 void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, uint count);
 
 #endif
