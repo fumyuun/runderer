@@ -28,7 +28,7 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
         for (uint x = 0; x < self->framebuffer->width; ++x) {
             fragment_t frag = {
                 .screen = {x, y, 0},
-                .color = {intensity * p1.color[0], intensity * p1.color[1], intensity * p1.color[2], 1.0f}
+                .color = {0.0f, 0.0f, 0.0f, 1.0f}
             };
 
             // if any component of the bc coordinates is negative, the point is not inside the triangle
@@ -36,6 +36,9 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 assert(frag_buf_current < *frag_buf_end);
                 frag.screen[2] = p1.position[2] * bc[0] + p2.position[2] * bc[1] + p3.position[2] * bc[2];
+                frag.color[0] = p1.color[0] * bc[0] + p2.color[0] * bc[1] + p3.color[0] * bc[2];
+                frag.color[1] = p1.color[1] * bc[0] + p2.color[1] * bc[1] + p3.color[1] * bc[2];
+                frag.color[2] = p1.color[2] * bc[0] + p2.color[2] * bc[1] + p3.color[2] * bc[2];
                 *frag_buf_current++ = frag;
             }
         }
