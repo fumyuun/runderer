@@ -134,3 +134,17 @@ stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t v
 
 	return result;
 }
+
+void runderer_fragment_shader_flat(const fragment_t *frag_buf,
+                                   uint frags_to_process,
+                                   framebuffer_t *frame) {
+  for (uint i = 0; i < frags_to_process; ++i) {
+    fragment_t const frag = frag_buf[i];
+    uint const x = (uint)(frag.screen[0]);
+    uint const y = (uint)(frag.screen[1]);
+    uint16_t const color_shaded = rgb_to_565((unsigned int)(0xFF * frag.color[0]),
+                                             (unsigned int)(0xFF * frag.color[1]),
+                                             (unsigned int)(0xFF * frag.color[2]));
+    frame->buf16[y * frame->width + x] = color_shaded;
+  }
+}
