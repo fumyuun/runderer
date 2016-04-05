@@ -41,7 +41,7 @@ int main (int argc, char **argv) {
             .color    = {0.0f, 0.0f, 1.0f, 1.0f}
         },{
             .position = {250.0f, 150.0f, 0.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 1.0f, 1.0f}
+            .color    = {1.0f, 0.0f, 1.0f, 1.0f}
         },{
             .position = {350.0f, 350.0f, 100.0f, 1.0f},
             .color    = {0.0f, 1.0f, 1.0f, 1.0f}
