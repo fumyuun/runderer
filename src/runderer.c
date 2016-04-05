@@ -125,3 +125,17 @@ void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec
         }
     }
 }
+
+void runderer_draw_triangle_array(runderer_t* self, const vertex_t* vertices, uint count){
+	for(uint i = 0; i < count; i++){
+		stream_t verts[3];
+		for(uint j = 0; j < 3; j++){
+			verts[j] = self->vertex_shader(vertices[i*3+j], self->model_matrix, self->view_matrix, self->projection_matrix);
+		}
+		fragment_t* begin = &self->fragbuf[0];
+		fragment_t* end = begin + RUNDERER_FRAGBUF_N;
+		self->triangle_rasterizer(verts[0], verts[1], verts[2], begin, &end);
+		uint const frags_drawn = (uint)(end - begin);
+		self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
+	}
+}

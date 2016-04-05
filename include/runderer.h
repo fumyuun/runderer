@@ -38,7 +38,7 @@ typedef stream_t (*vertex_shader_func_t)
 (vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix);
 
 typedef void (*triangle_rasterizer_func_t)
-(stream_t p1, stream_t p2, stream_t p3, fragment_t* frag_buf_begin, fragment_t* frag_buf_end);
+(stream_t p1, stream_t p2, stream_t p3, fragment_t* frag_buf_begin, fragment_t** frag_buf_end);
 
 typedef void (*line_rasterizer_func_t)
 (stream_t p1, stream_t p2, fragment_t* frag_buf_begin, fragment_t* frag_buf_end);
@@ -62,7 +62,7 @@ typedef struct runderer {
 
 	draw_triangle_array_func_t draw_triangle_array;
 	vertex_shader_func_t vertex_shader;
-	triangle_rasterizer_func_t triangle_rasterer;
+	triangle_rasterizer_func_t triangle_rasterizer;
 	line_rasterizer_func_t line_rasterizer;
 	fragment_shader_func_t fragment_shader;
 } runderer_t;
@@ -95,5 +95,7 @@ void runderer_triangle(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, unsi
  * \param color the color of the triangle
  */
 void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec3f_t color);
+
+void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, uint count);
 
 #endif
