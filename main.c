@@ -3,6 +3,7 @@
 #include "framebuffer.h"
 #include "runderer.h"
 #include "vector.h"
+#include "matrix.h"
 #include "src/rasterizer.h"
 
 #include <SDL2/SDL.h>
@@ -49,6 +50,11 @@ int main (int argc, char **argv) {
             .color    = {0.0f, 1.0f, 0.0f, 1.0f}
         }
     };
+
+    mat_identity(run.model_matrix);
+    mat_identity(run.view_matrix);
+    mat_identity(run.projection_matrix);
+    mat_identity(run.viewport_matrix);
 
     run.draw_triangle_array = runderer_draw_triangle_array;
     run.vertex_shader = runderer_vertex_shader;

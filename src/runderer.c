@@ -29,6 +29,11 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
         run->zbuffer[i] = FLT_MIN;
     }
 
+    run->fragbuf = malloc(RUNDERER_FRAGBUF_N * sizeof(fragment_t));
+    if (run->fragbuf == NULL) {
+        return 3;
+    }
+
     // For now, the light is just coming from the z-axis
     run->eye_direction[0] = 0.0f;
     run->eye_direction[1] = 0.0f;

@@ -31,7 +31,7 @@ typedef void (*line_rasterizer_func_t)
 typedef void (*fragment_shader_func_t)
 (fragment_t const * frag_buf, uint frags_to_process, framebuffer_t* frame);
 
-#define RUNDERER_FRAGBUF_N 1024
+#define RUNDERER_FRAGBUF_N 1000000
 
 typedef struct runderer {
 	framebuffer_t* framebuffer;
@@ -43,7 +43,7 @@ typedef struct runderer {
 	mat4f_t projection_matrix;
 	mat4f_t viewport_matrix;
 
-	fragment_t fragbuf[RUNDERER_FRAGBUF_N];
+	fragment_t *fragbuf;
 
 	draw_triangle_array_func_t draw_triangle_array;
 	vertex_shader_func_t vertex_shader;
