@@ -19,12 +19,12 @@ void mat_mult_vec4f(mat4f_t m, vec4f_t v, vec4f_t res) {
     }
 }
 
-void mat_mult_mat4f(mat4f_t m, vec4f_t w, mat4f_t res) {
+void mat_mult_mat4f(mat4f_t m, mat4f_t w, mat4f_t res) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             res[y * 4 + x] = 0;
             for (int i = 0; i < 4; ++i) {
-                res[y * 4 + x] += m[y * 4 + i] * m[i * 4 + x];
+                res[y * 4 + x] += m[y * 4 + i] * w[i * 4 + x];
             }
         }
     }
