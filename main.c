@@ -61,7 +61,7 @@ int main (int argc, char **argv) {
     run.triangle_rasterizer = rasterize_triangle;
     run.fragment_shader = runderer_fragment_shader_flat;
 
-    runderer_draw_triangle_array(&run, vert, 6);
+    runderer_draw_triangle_array(&run, vert, 2);
 
     framebuffer_flip(&fb);
 
