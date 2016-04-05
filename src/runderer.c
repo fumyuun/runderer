@@ -92,3 +92,55 @@ void runderer_fragment_shader_flat(const fragment_t *frag_buf,
     frame->buf16[y * frame->width + x] = color_shaded;
   }
 }
+
+void perspective(float field_of_view, float aspect_ratio, float n, float f, mat4f_t mat) {
+    float const halftan = tanf(.5f * field_of_view);
+    float const h = halftan;
+    float const a = aspect_ratio;
+
+    mat[0] = 1 / (a * h);
+    mat[1] = 0;
+    mat[2] = 0;
+    mat[3] = 0;
+
+    mat[4] = 0;
+    mat[5] = 1 / h;
+    mat[6] = 0;
+    mat[7] = 0;
+
+    mat[8] = 0;
+    mat[9] = 0;
+    mat[10] = (n + f) / (n - f);
+    mat[11] = (2 * n * f) / (n - f);
+
+    mat[12] = 0;
+    mat[13] = 0;
+    mat[14] = -1;
+    mat[15] = 0;
+}
+
+void orthographic(float left, float right, float bottom, float top, float near, float far, mat4f_t mat) {
+    float const tx = -(right + left) / (right - left);
+    float const ty = -(top + bottom) / (top - bottom);
+    float const tz = -(far + near) / (far - near);
+
+    mat[0] = 2 / (right - left);
+    mat[1] = 0;
+    mat[2] = 0;
+    mat[3] = tx;
+
+    mat[4] = 0;
+    mat[5] = 2 / (top - bottom);
+    mat[6] = 0;
+    mat[7] = ty;
+
+    mat[8] = 0;
+    mat[9] = 0;
+    mat[10] = 2 / (near - far);
+    mat[11] = tz;
+
+    mat[12] = 0;
+    mat[13] = 0;
+    mat[14] = 0;
+    mat[15] = 1;
+}

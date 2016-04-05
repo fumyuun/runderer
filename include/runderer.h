@@ -64,4 +64,15 @@ stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t v
 void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, uint count);
 void runderer_fragment_shader_flat(fragment_t const * frag_buf, uint frags_to_process, framebuffer_t* frame);
 
+void perspective(float field_of_view, float aspect_ratio, float n, float f,
+                 mat4f_t mat);
+
+void orthographic(float left,
+                  float right,
+                  float bottom,
+                  float top,
+                  float near, // (positive value, near plane will be at -n)
+                  float far, // (positive value, far plane will be at -f)
+                  mat4f_t mat);
+
 #endif
