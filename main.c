@@ -3,6 +3,7 @@
 #include "framebuffer.h"
 #include "runderer.h"
 #include "vector.h"
+#include "src/rasterizer.h"
 
 #include <SDL2/SDL.h>
 
@@ -27,18 +28,34 @@ int main (int argc, char **argv) {
         return 2;
     }
 
-    vec3f_t t1_p1 = {200.0f, 100.0f, 10.0f};
-    vec3f_t t1_p2 = {300.0f, 300.0f, 10.0f};
-    vec3f_t t1_p3 = {100.0f, 300.0f, 0.0f};
-    vec3f_t t1_col = {0.0f, 1.0f, 0.0f};
+    vertex_t vert[6] = {
+        {
+            .position = {200.0f, 100.0f, 10.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {300.0f, 300.0f, 10.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {100.0f, 300.0f, 0.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {250.0f, 150.0f, 0.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {350.0f, 350.0f, 100.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {150.0f, 350.0f, 100.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        }
+    };
 
-    vec3f_t t2_p1 = {250.0f, 150.0f, 0.0f};
-    vec3f_t t2_p2 = {350.0f, 350.0f, 100.0f};
-    vec3f_t t2_p3 = {150.0f, 350.0f, 100.0f};
-    vec3f_t t2_col = {0.0f, 1.0f, 0.0f};
+    run.draw_triangle_array = runderer_draw_triangle_array;
+    run.vertex_shader = runderer_vertex_shader;
+    run.triangle_rasterizer = rasterize_triangle;
+    run.fragment_shader = runderer_fragment_shader_flat;
 
-    runderer_trianglef(&run, t1_p1, t1_p2, t1_p3, t1_col);
-    runderer_trianglef(&run, t2_p1, t2_p2, t2_p3, t2_col);
+    runderer_draw_triangle_array(&run, vert, 6);
 
     framebuffer_flip(&fb);
 

@@ -1,4 +1,4 @@
-CFLAGS=$(shell sdl2-config --cflags) -Iinclude
+CFLAGS=$(shell sdl2-config --cflags) -Iinclude -g
 LDFLAGS=$(shell sdl2-config --libs) -lm
 
 main:	main.c framebuffer.o math.o runderer.o matrix.o rasterizer.o
