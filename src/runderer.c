@@ -86,9 +86,9 @@ void runderer_fragment_shader_flat(const fragment_t *frag_buf,
     fragment_t const frag = frag_buf[i];
     uint const x = (uint)(frag.screen[0]);
     uint const y = (uint)(frag.screen[1]);
-    uint16_t const color_shaded = rgb_to_565((unsigned int)(0xFF * frag.color[0]),
-                                             (unsigned int)(0xFF * frag.color[1]),
-                                             (unsigned int)(0xFF * frag.color[2]));
+    uint16_t const color_shaded = rgb_to_565((unsigned int)(0x1F * frag.color[0]),
+                                             (unsigned int)(0x3F * frag.color[1]),
+                                             (unsigned int)(0x1F * frag.color[2]));
     frame->buf16[y * frame->width + x] = color_shaded;
   }
 }
