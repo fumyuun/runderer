@@ -60,27 +60,6 @@ typedef struct runderer {
  */
 int runderer_bind(runderer_t *run, framebuffer_t *fb);
 
-/**
- * \brief Draw a triangle between three three-dimensional points
- * \param run a pointer to the renderer
- * \param p1 the first point
- * \param p2 the second point
- * \param p3 the third point
- * \param color the color of the triangle, in 5R6G5B color format
- */
-void runderer_triangle(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, unsigned int color);
-
-/**
- * \brief Draw a filled triangle between three three-dimensional points, using
- * a simple flat shaded color.
- * \param run a pointer to the renderer
- * \param p1 the first point
- * \param p2 the second point
- * \param p3 the third point
- * \param color the color of the triangle
- */
-void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec3f_t color);
-
 stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix);
 void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, uint count);
 void runderer_fragment_shader_flat(fragment_t const * frag_buf, uint frags_to_process, framebuffer_t* frame);
