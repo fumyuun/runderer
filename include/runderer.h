@@ -10,6 +10,7 @@
 
 #include "framebuffer.h"
 #include "vector.h"
+#include "matrix.h"
 
 #define ZBUF_TYPE float
 
@@ -17,6 +18,7 @@ typedef struct {
     framebuffer_t* framebuffer;
     ZBUF_TYPE *zbuffer;
     vec3f_t light_direction;
+    mat4f_t view;
 } runderer_t;
 
 /**

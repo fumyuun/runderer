@@ -2,6 +2,7 @@
 #include "math.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include <float.h>
 
 // Convert r, g, b (in bytes) to a 16-bit 5R6G5B color
 #define rgb_to_565(r, g, b) (uint16_t)((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
@@ -34,6 +35,10 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
     run->zbuffer = malloc(fb->width * fb->height * sizeof(ZBUF_TYPE));
     if (run->zbuffer == NULL) {
         return 2;
+    }
+
+    for (int i = 0; i < fb->width * fb->height; ++i) {
+        run->zbuffer[i] = FLT_MIN;
     }
 
     // For now, the light is just coming from the z-axis
