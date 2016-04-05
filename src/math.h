@@ -19,7 +19,6 @@ void math_cross3f(vec3f_t u, vec3f_t v, vec3f_t result);
  * \param p the point of who's coordinates to calculate
  * \param result the vector to store the result in
  */
-void math_barycentric2i(vec2i_t a, vec2i_t b, vec2i_t c, vec2i_t p, vec3f_t result);
 void math_barycentric3f(vec3f_t a, vec3f_t b, vec3f_t c, vec3f_t p, vec3f_t result);
 
 /**

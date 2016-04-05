@@ -53,44 +53,4 @@ void framebuffer_quit(framebuffer_t *fb);
  */
 void framebuffer_flip(framebuffer_t *fb);
 
-/**
- * \brief Draw a rectangle directly on the framebuffer.
- * \param fb a pointer to the framebuffer driver
- * \param x the x position of the rectangle
- * \param y the y position of the rectangle
- * \param width the width of the rectangle
- * \param height the height of the rectangle
- * \param color the color of the rectangle, in 5R6G5B color format
- */
-void framebuffer_rect(framebuffer_t *fb, int x, int y, int width, int height, int color);
-
-/**
- * \brief Draw a line between two points
- * \param fb a pointer to the framebuffer driver
- * \param p1 the first point
- * \param p2 the second point
- * \param color the color of the line, in 5R6G5B color format
- */
-void framebuffer_line(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, unsigned int color);
-
-/**
- * \brief Draw a triangle between three two-dimensional points
- * \param fb a pointer to the framebuffer driver
- * \param p1 the first point
- * \param p2 the second point
- * \param p3 the third point
- * \param color the color of the triangle, in 5R6G5B color format
- */
-void framebuffer_triangle(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color);
-
-/**
- * \brief Draw a filled triangle between three two-dimensional points
- * \param fb a pointer to the framebuffer driver
- * \param p1 the first point
- * \param p2 the second point
- * \param p3 the third point
- * \param color the color of the triangle, in 5R6G5B color format
- */
-void framebuffer_trianglef(framebuffer_t *fb, vec2i_t p1, vec2i_t p2, vec2i_t p3, unsigned int color);
-
 #endif /* FRAMEBUFFER_H */

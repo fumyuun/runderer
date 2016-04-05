@@ -7,19 +7,6 @@
 // Convert r, g, b (in bytes) to a 16-bit 5R6G5B color
 #define rgb_to_565(r, g, b) (uint16_t)((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 
-// Compute a bounding box for a triangle
-void triangle_bbox(vec3f_t p1, vec3f_t p2, vec3f_t p3, vec2i_t min, vec2i_t max) {
-    float *points[3] = {p1, p2, p3};
-    min[0] = max[0] = points[0][0];
-    min[1] = max[1] = points[0][1];
-    for (int i = 1; i < 3; ++i) {
-        for (int j = 0; j < 2; ++j) {
-            if (points[i][j] < min[j]) min[j] = points[i][j];
-            if (points[i][j] > max[j]) max[j] = points[i][j];
-        }
-    }
-}
-
 /**
  * Bind the runderer instance to a framebuffer driver
  * \param run a pointer to the runderer instance to bind
@@ -74,8 +61,6 @@ void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec
     vec3f_t p;       // the current point to consider rasterizing
     vec3f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
     vec3f_t normal;  // the face normal of triangle p1p2p3
-    vec2i_t bb_min;  // bounding box of the triangle
-    vec2i_t bb_max;
     float intensity;    // the light intensity
     unsigned int color_shaded;  // the shaded color, linearly interpolated over intensity (for now)
 
@@ -97,18 +82,9 @@ void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec
                               (unsigned int)(0xFF * intensity * color[1]),
                               (unsigned int)(0xFF * intensity * color[2]));
 
-    // get the bounding box of the triangle
-    triangle_bbox(p1, p2, p3, bb_min, bb_max);
-
-    // clip the bounding box to the screen
-    if (bb_min[0] < 0) bb_min[0] = 0;
-    if (bb_min[1] < 0) bb_min[1] = 0;
-    if (bb_max[0] > run->framebuffer->width)  bb_max[0] = run->framebuffer->width;
-    if (bb_max[1] > run->framebuffer->height) bb_max[1] = run->framebuffer->height;
-
     // iterate over all points to consider if they're in the triangle
-    for (int y = bb_min[1]; y < bb_max[1]; ++y) {
-        for (int x = bb_min[0]; x < bb_max[0]; ++x) {
+    for (int y = 0; y < run->framebuffer->height; ++y) {
+        for (int x = 0; x < run->framebuffer->width; ++x) {
             p[0] = x;
             p[1] = y;
             p[2] = 0;
@@ -134,7 +110,7 @@ void runderer_draw_triangle_array(runderer_t* self, const vertex_t* vertices, ui
 		}
 		fragment_t* begin = &self->fragbuf[0];
 		fragment_t* end = begin + RUNDERER_FRAGBUF_N;
-		self->triangle_rasterizer(verts[0], verts[1], verts[2], begin, &end);
+		self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end);
 		uint const frags_drawn = (uint)(end - begin);
 		self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
 	}
