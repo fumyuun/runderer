@@ -42,9 +42,9 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
     }
 
     // For now, the light is just coming from the z-axis
-    run->light_direction[0] = 0.0f;
-    run->light_direction[1] = 0.0f;
-    run->light_direction[2] = -1.0f;
+    run->eye_direction[0] = 0.0f;
+    run->eye_direction[1] = 0.0f;
+    run->eye_direction[2] = -1.0f;
 
     return 0;
 }
@@ -84,7 +84,7 @@ void runderer_trianglef(runderer_t *run, vec3f_t p1, vec3f_t p2, vec3f_t p3, vec
     math_normalize(normal);
 
     // the light intensity
-    intensity = math_dotproduct(normal, run->light_direction);
+    intensity = math_dotproduct(normal, run->eye_direction);
 
     // our light intensity is negative if we have a back face
     if (intensity < 0.0f) {

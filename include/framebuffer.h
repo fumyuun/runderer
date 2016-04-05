@@ -15,9 +15,10 @@
  * the framebuffer, for testing purposes.
  */
 
-#include "SDL.h"
 #include <stdint.h>
 #include "vector.h"
+
+#include <SDL2/SDL.h>
 
 typedef struct {
     unsigned int width;
