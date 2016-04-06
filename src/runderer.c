@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <float.h>
 
+#define RUNDERER_FRAGBUF_N 1024*1024
 
 /**
  * Bind the runderer instance to a framebuffer driver

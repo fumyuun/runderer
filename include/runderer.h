@@ -31,8 +31,6 @@ typedef void (*line_rasterizer_func_t)
 typedef void (*fragment_shader_func_t)
 (fragment_t const * frag_buf, uint frags_to_process, framebuffer_t* frame);
 
-#define RUNDERER_FRAGBUF_N 1000000
-
 typedef struct runderer {
 	framebuffer_t* framebuffer;
 	ZBUF_TYPE *zbuffer;
