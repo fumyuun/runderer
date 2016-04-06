@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <float.h>
 
-// Convert r, g, b (in bytes) to a 16-bit 5R6G5B color
-#define rgb_to_565(r, g, b) (uint16_t)((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 
 /**
  * Bind the runderer instance to a framebuffer driver
@@ -79,6 +77,14 @@ stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix,
   return result;
 }
 
+static uint16_t rgb3f_to_rgb565(vec3f_t const color){
+    uint8_t const r = (uint8_t)(0x1F * color[0]);
+    uint8_t const g = (uint8_t)(0x3F * color[1]);
+    uint8_t const b = (uint8_t)(0x1F * color[2]);
+    uint16_t result = (uint16_t)(((r & 0x1F) << 11) | ((g & 0x3F) << 5) | (b & 0x1F));
+    return result;
+}
+
 void runderer_fragment_shader_flat(const fragment_t *frag_buf,
                                    uint frags_to_process,
                                    framebuffer_t *frame) {
@@ -86,10 +92,7 @@ void runderer_fragment_shader_flat(const fragment_t *frag_buf,
     fragment_t const frag = frag_buf[i];
     uint const x = (uint)(frag.screen[0]);
     uint const y = (uint)(frag.screen[1]);
-    uint16_t const color_shaded = rgb_to_565((unsigned int)(0x1F * frag.color[0]),
-                                             (unsigned int)(0x3F * frag.color[1]),
-                                             (unsigned int)(0x1F * frag.color[2]));
-    frame->buf16[y * frame->width + x] = color_shaded;
+    frame->buf16[y * frame->width + x] = rgb3f_to_rgb565(frag.color);
   }
 }
 
