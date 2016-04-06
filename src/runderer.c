@@ -24,7 +24,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
         return 2;
     }
 
-    for (int i = 0; i < fb->width * fb->height; ++i) {
+    for (uint i = 0; i < fb->width * fb->height; ++i) {
         run->zbuffer[i] = FLT_MIN;
     }
 
