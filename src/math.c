@@ -52,7 +52,7 @@ void math_normal(vec3f_t a, vec3f_t b, vec3f_t c, vec3f_t result) {
 }
 
 void math_normalize(vec3f_t v) {
-    float n = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    float n = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     v[0] /= n;
     v[1] /= n;
     v[2] /= n;

@@ -12,7 +12,7 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
     }
 
     // allocate a window
-    fb->window = SDL_CreateWindow("framebuffer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+    fb->window = SDL_CreateWindow("framebuffer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (int)width, (int)height, SDL_WINDOW_SHOWN);
     if (fb->window == NULL) {
         printf("Couldnt create a window\n");
         SDL_Quit();
@@ -29,7 +29,7 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
     }
 
     // allocate a 16 bits buffer surface
-    fb->win_buf = SDL_CreateRGBSurface(0, width, height, 16, 0, 0, 0, 0);
+    fb->win_buf = SDL_CreateRGBSurface(0, (int)width, (int)height, 16, 0, 0, 0, 0);
     if (fb->win_buf == NULL) {
         printf("Couldnt create an extra buffer\n");
         SDL_DestroyWindow(fb->window);
@@ -40,8 +40,8 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
     fb->buf = fb->win_buf->pixels;
     fb->buf16 = fb->win_buf->pixels;
 
-    fb->width = fb->win_buf->w;
-    fb->height = fb->win_buf->h;
+    fb->width = (unsigned int)fb->win_buf->w;
+    fb->height = (unsigned int)fb->win_buf->h;
 
     return 0;
 }
