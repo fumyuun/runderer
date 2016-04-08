@@ -75,6 +75,7 @@ int main (int argc, char **argv) {
 
     for (int i = 0; i < 10; ++i) {
         framebuffer_clear(&fb);
+        mat_identity(run.model_matrix);
         glRotatef(run.model_matrix, 0.1f * M_PI * i, 0.0f, 0.0f, 1.0f, rotated);
         memcpy(run.model_matrix, rotated, 4 * 4 * sizeof(float));
 
