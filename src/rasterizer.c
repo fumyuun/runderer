@@ -3,10 +3,33 @@
 #include "vector.h"
 #include "math.h"
 
+typedef struct {
+    uint xmin;
+    uint ymin;
+    uint xmax;
+    uint ymax;
+} bbox_t;
+
+void get_bbox(vec3f_t p1, vec3f_t p2, vec3f_t p3, bbox_t *result) {
+    result->xmin = result->xmax = p1[0];
+    result->ymin = result->ymax = p1[1];
+
+    if (result->xmin > p2[0]) result->xmin = p2[0];
+    if (result->ymin > p2[1]) result->ymin = p2[1];
+    if (result->xmax < p2[0]) result->xmax = p2[0];
+    if (result->ymax < p2[1]) result->ymax = p2[1];
+    if (result->xmin > p3[0]) result->xmin = p3[0];
+    if (result->ymin > p3[1]) result->ymin = p3[1];
+    if (result->xmax < p3[0]) result->xmax = p3[0];
+    if (result->ymax < p3[1]) result->ymax = p3[1];
+
+}
+
 void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_t p3, fragment_t* frag_buf_begin, fragment_t** frag_buf_end) {
     vec3f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
     vec3f_t normal;  // the face normal of triangle p1p2p3
-    float intensity;    // the light intensity
+    float intensity; // the light intensity
+    bbox_t bbox;     // the bounding box of our triangle
 
     // compute and normalize our face normal
     math_normal(p1.position, p2.position, p3.position, normal);
@@ -23,9 +46,11 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
 
     fragment_t* frag_buf_current = frag_buf_begin;
 
+    get_bbox(p1.position, p2.position, p3.position, &bbox);
+
     // iterate over all points to consider if they're in the triangle
-    for (uint y = 0; y < self->framebuffer->height; ++y) {
-        for (uint x = 0; x < self->framebuffer->width; ++x) {
+    for (uint y = bbox.ymin; y < bbox.ymax; ++y) {
+        for (uint x = bbox.xmin; x < bbox.xmax; ++x) {
             fragment_t frag = {
                 .screen = {x, y, 0},
                 .color = {0.0f, 0.0f, 0.0f, 1.0f}
