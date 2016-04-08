@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "framebuffer.h"
 #include "runderer.h"
@@ -74,7 +75,7 @@ int main (int argc, char **argv) {
 
     for (int i = 0; i < 10; ++i) {
         framebuffer_clear(&fb);
-        glRotatef(run.model_matrix, 10.0f * i, 0.0f, 0.0f, 1.0f, rotated);
+        glRotatef(run.model_matrix, 0.1f * M_PI * i, 0.0f, 0.0f, 1.0f, rotated);
         memcpy(run.model_matrix, rotated, 4 * 4 * sizeof(float));
 
         runderer_draw_triangle_array(&run, vert, 1);
@@ -89,12 +90,13 @@ int main (int argc, char **argv) {
 }
 
 void glRotatef(mat4f_t mat, float angle, float x, float y, float z, mat4f_t result) {
+    angle = angle;
     float c = cos(angle);
     float s = sin(angle);
     mat4f_t rot = {
-          x*x*(1-c)+c,  x*y*(1-c)-z*s,  x*z*(1-c)+y*s,  0,
-        y*x*(1-c)+z*s,    y*y*(1-c)+c,  y*z*(1-c)-x*s,  0,
-        x*z*(1-c)-y*s,  y*z*(1-c)+x*s,    z*z*(1-c)+c,  0,
+          x*x*(1-c)+c,  y*x*(1-c)+z*s,  x*z*(1-c)-y*s,  0,
+        x*y*(1-c)-z*s,    y*y*(1-c)+c,  y*z*(1-c)+x*s,  0,
+        x*z*(1-c)+y*s,  y*z*(1-c)-x*s,    z*z*(1-c)+c,  0,
                     0,              0,              0,  1
     };
 
