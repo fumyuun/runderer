@@ -41,6 +41,12 @@ typedef struct {
 int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height);
 
 /**
+ * \brief Clear the framebuffer to black
+ * \param fb a pointer to the framebuffer driver
+ */
+void framebuffer_clear(framebuffer_t *fb);
+
+/**
  * \brief Clean up the framebuffer driver.
  * This method will also close SDL if there are no more active framebuffers.
  * \param fb a pointer to the framebuffer driver

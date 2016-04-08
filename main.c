@@ -8,6 +8,8 @@
 
 #include <SDL2/SDL.h>
 
+void glRotatef(mat4f_t mat, float angle, float x, float y, float z, mat4f_t result);
+
 int main (int argc, char **argv) {
     int error;
     framebuffer_t fb;
@@ -27,17 +29,17 @@ int main (int argc, char **argv) {
         return 2;
     }
 
-    vertex_t vert[6] = {
+    vertex_t vert[3] = {
         {
-            .position = {200.0f, 100.0f, 10.0f, 1.0f},
+            .position = {0.0f, -1.0f, 0.0f, 1.0f},
             .color    = {1.0f, 0.0f, 0.0f, 1.0f}
         },{
-            .position = {300.0f, 300.0f, 10.0f, 1.0f},
+            .position = {1.0f, 1.0f, 0.0f, 1.0f},
             .color    = {0.0f, 1.0f, 0.0f, 1.0f}
         },{
-            .position = {100.0f, 300.0f, 0.0f, 1.0f},
+            .position = {-1.0f, 1.0f, 0.0f, 1.0f},
             .color    = {0.0f, 0.0f, 1.0f, 1.0f}
-        },{
+        }/*,{
             .position = {250.0f, 150.0f, 0.0f, 1.0f},
             .color    = {1.0f, 0.0f, 1.0f, 1.0f}
         },{
@@ -46,7 +48,7 @@ int main (int argc, char **argv) {
         },{
             .position = {150.0f, 350.0f, 100.0f, 1.0f},
             .color    = {1.0f, 1.0f, 0.0f, 1.0f}
-        }
+        }*/
     };
 
     mat_identity(run.model_matrix);
@@ -59,13 +61,42 @@ int main (int argc, char **argv) {
     run.triangle_rasterizer = rasterize_triangle;
     run.fragment_shader = runderer_fragment_shader_flat;
 
-    runderer_draw_triangle_array(&run, vert, 2);
+    float depth = 10.0f; // temporary value for now
+    float x = 0, y = 0, w = 640, h = 480;
+    run.viewport_matrix[0        ] = w / 2.0f;
+    run.viewport_matrix[4 * 0 + 3] = x + w / 2.0f;
+    run.viewport_matrix[4 * 1 + 1] = h / 2.0f;
+    run.viewport_matrix[4 * 1 + 3] = y + h / 2.0f;
+    run.viewport_matrix[4 * 2 + 2] = depth / 2.0f;
+    run.viewport_matrix[4 * 2 + 3] = depth / 2.0f;
 
-    framebuffer_flip(&fb);
+    mat4f_t rotated;
 
-    SDL_Delay(2000);
+    for (int i = 0; i < 10; ++i) {
+        framebuffer_clear(&fb);
+        glRotatef(run.model_matrix, 10.0f * i, 0.0f, 0.0f, 1.0f, rotated);
+        memcpy(run.model_matrix, rotated, 4 * 4 * sizeof(float));
+
+        runderer_draw_triangle_array(&run, vert, 1);
+
+        framebuffer_flip(&fb);
+        SDL_Delay(500);
+    }
 
     framebuffer_quit(&fb);
 
     return 0;
+}
+
+void glRotatef(mat4f_t mat, float angle, float x, float y, float z, mat4f_t result) {
+    float c = cos(angle);
+    float s = sin(angle);
+    mat4f_t rot = {
+          x*x*(1-c)+c,  x*y*(1-c)-z*s,  x*z*(1-c)+y*s,  0,
+        y*x*(1-c)+z*s,    y*y*(1-c)+c,  y*z*(1-c)-x*s,  0,
+        x*z*(1-c)-y*s,  y*z*(1-c)+x*s,    z*z*(1-c)+c,  0,
+                    0,              0,              0,  1
+    };
+
+    mat_mult_mat4f(mat, rot, result);
 }

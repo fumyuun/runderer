@@ -48,7 +48,7 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
     for (uint j = 0; j < 3; j++) {
       verts[j] =
           self->vertex_shader(vertices[i * 3 + j], self->model_matrix,
-                              self->view_matrix, self->projection_matrix);
+                              self->view_matrix, self->projection_matrix, self->viewport_matrix);
     }
     fragment_t *begin = &self->fragbuf[0];
     fragment_t *end = begin + RUNDERER_FRAGBUF_N;
@@ -60,13 +60,16 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
 
 stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix,
                                 mat4f_t view_matrix,
-                                mat4f_t projection_matrix) {
+                                mat4f_t projection_matrix,
+                                mat4f_t viewport_matrix) {
   vec4f_t world_pos;
   mat_mult_vec4f(model_matrix, vertex.position, world_pos);
   vec4f_t view_pos;
   mat_mult_vec4f(view_matrix, world_pos, view_pos);
+  vec4f_t projected_pos;
+  mat_mult_vec4f(projection_matrix, view_pos, projected_pos);
   vec4f_t screen_pos;
-  mat_mult_vec4f(projection_matrix, view_pos, screen_pos);
+  mat_mult_vec4f(viewport_matrix, projected_pos, screen_pos);
   vec3f_t result_pos = {screen_pos[0], screen_pos[1], screen_pos[2]};
 
   stream_t result = {

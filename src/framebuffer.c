@@ -46,6 +46,11 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
     return 0;
 }
 
+void framebuffer_clear(framebuffer_t *fb) {
+    SDL_FillRect(fb->win_buf, NULL, SDL_MapRGB(fb->win_buf->format, 0x00, 0x00, 0x00));
+}
+
+
 void framebuffer_quit(framebuffer_t *fb) {
     if (fb != NULL) {
         SDL_FreeSurface(fb->win_buf);
