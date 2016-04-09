@@ -62,8 +62,6 @@ int main (int argc, char **argv) {
     runderer_activate(&run);
     glViewport(0, 0, SCREEN_W, SCREEN_H);
 
-    mat4f_t rotated;
-
     for (int i = 0; i < 10; ++i) {
         framebuffer_clear(&fb);
         mat_identity(run.model_matrix);
