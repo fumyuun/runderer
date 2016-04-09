@@ -1,13 +1,15 @@
 #include "matrix.h"
 #include "vector.h"
-
+#include <string.h>
 
 void mat_identity(mat4f_t m) {
-    for (int y = 0; y < 4; ++y) {
-        for (int x = 0; x < 4; ++x) {
-            m[y * 4 + x] = (x == y ? 1.0f : 0.0f);
-        }
-    }
+    static const mat4f_t i = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+    memcpy(m, i, sizeof(mat4f_t));
 }
 
 void mat_mult_vec4f(const mat4f_t m, const vec4f_t v, vec4f_t res) {
