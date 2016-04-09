@@ -53,8 +53,6 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
 
     get_bbox(p1.position, p2.position, p3.position, &bbox);
 
-    if (bbox.xmin < 0) bbox.xmin = 0;
-    if (bbox.ymin < 0) bbox.ymin = 0;
     if (bbox.xmax > self->framebuffer->width)  bbox.xmax = self->framebuffer->width;
     if (bbox.ymax > self->framebuffer->height) bbox.ymax = self->framebuffer->height;
 

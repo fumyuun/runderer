@@ -10,7 +10,7 @@ void mat_identity(mat4f_t m) {
     }
 }
 
-void mat_mult_vec4f(mat4f_t m, vec4f_t v, vec4f_t res) {
+void mat_mult_vec4f(const mat4f_t m, const vec4f_t v, vec4f_t res) {
     for (int y = 0; y < 4; ++y) {
         res[y] = 0;
         for (int x = 0; x < 4; ++x) {
@@ -19,7 +19,7 @@ void mat_mult_vec4f(mat4f_t m, vec4f_t v, vec4f_t res) {
     }
 }
 
-void mat_mult_mat4f(mat4f_t m, mat4f_t w, mat4f_t res) {
+void mat_mult_mat4f(const mat4f_t m, const mat4f_t w, mat4f_t res) {
     for (int y = 0; y < 4; ++y) {
         for (int x = 0; x < 4; ++x) {
             res[y * 4 + x] = 0;
