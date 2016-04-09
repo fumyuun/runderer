@@ -41,6 +41,7 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
     // our light intensity is negative if we have a back face
     if (intensity < 0.0f) {
         printf("Culled back-face\n");
+        *frag_buf_end = frag_buf_begin;
         return;
     }
 
