@@ -41,6 +41,8 @@ typedef struct runderer {
 	mat4f_t projection_matrix;
 	mat4f_t viewport_matrix;
 
+    mat4f_t *active_matrix;
+
 	fragment_t *fragbuf;
 
 	draw_triangle_array_func_t draw_triangle_array;

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h>
 #include "glapi.h"
 #include "runderer.h"
 
@@ -7,6 +8,15 @@ static runderer_t *runderer = NULL;
 
 void runderer_activate(runderer_t *run) {
     runderer = run;
+}
+
+void glMatrixMode(int mode) {
+    switch(mode) {
+        case GL_MODELVIEW:  runderer->active_matrix = &runderer->model_matrix;        break;
+        case GL_PROJECTION: runderer->active_matrix = &runderer->projection_matrix;   break;
+        default:
+            printf("Invalid glMatrixMode\n");
+    }
 }
 
 void glViewport(int x, int y, int w, int h) {
