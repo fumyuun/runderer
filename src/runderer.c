@@ -43,6 +43,17 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
     return 0;
 }
 
+void runderer_unbind(runderer_t *run) {
+    if (run != NULL) {
+         if (run->zbuffer != NULL) {
+            free(run->zbuffer);
+         }
+         if (run->fragbuf != NULL) {
+            free(run->fragbuf);
+         }
+    }
+}
+
 void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
                                   uint count) {
   for (uint i = 0; i < count; i++) {

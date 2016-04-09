@@ -74,6 +74,7 @@ int main (int argc, char **argv) {
         framebuffer_flip(&fb);
         main_delay(500);
     }
+    runderer_unbind(&run);
 
     framebuffer_quit(&fb);
 
