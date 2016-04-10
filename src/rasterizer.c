@@ -47,11 +47,6 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
 
     fragment_t* frag_buf_current = frag_buf_begin;
 
-    printf("Rasterize traingle:\n\t(%f,%f,%f)\n\t(%f,%f,%f)\n\t(%f,%f,%f)\n",
-        p1.position[0], p1.position[1], p1.position[2],
-        p2.position[0], p2.position[1], p2.position[2],
-        p3.position[0], p3.position[1], p3.position[2]);
-
     get_bbox(p1.position, p2.position, p3.position, &bbox);
 
     if (bbox.xmin < 0) bbox.xmin = 0;

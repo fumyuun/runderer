@@ -66,15 +66,23 @@ int main (int argc, char **argv) {
     runderer_activate(&run);
     glViewport(0, 0, SCREEN_W, SCREEN_H);
 
-    for (int i = 0; i < 12; ++i) {
+    int quit = 0;
+    SDL_Event event;
+    while (!quit) {
+        while (SDL_PollEvent(&event)) {
+            switch(event.type) {
+                case SDL_QUIT: quit = 1; break;
+                default: break;
+            }
+        }
+
         framebuffer_clear(&fb);
-        mat_identity(run.model_matrix);
-        glRotatef(0.1f * M_PI * i, 0.0f, 0.0f, 1.0f);
+
+        glRotatef(0.1f * M_PI, 0.0f, 0.0f, 1.0f);
 
         runderer_draw_triangle_array(&run, vert, 1);
 
         framebuffer_flip(&fb);
-        main_delay(500);
     }
     runderer_unbind(&run);
 
