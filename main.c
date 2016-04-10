@@ -8,13 +8,17 @@
 #include "glapi.h"
 #include "src/rasterizer.h"
 
-#include <SDL2/SDL.h>
-
 #define SCREEN_W 640
 #define SCREEN_H 480
 
+#ifdef FB_SDL
+#include <SDL2/SDL.h>
+#endif /* FB_SDL */
+
 void main_delay(unsigned int ms) {
+    #ifdef FB_SDL
     SDL_Delay(ms);
+    #endif /* FB_SDL */
 }
 
 int main (int argc, char **argv) {
