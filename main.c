@@ -62,7 +62,7 @@ int main (int argc, char **argv) {
     runderer_activate(&run);
     glViewport(0, 0, SCREEN_W, SCREEN_H);
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 12; ++i) {
         framebuffer_clear(&fb);
         mat_identity(run.model_matrix);
         glRotatef(0.1f * M_PI * i, 0.0f, 0.0f, 1.0f);

@@ -4,10 +4,10 @@
 #include "math.h"
 
 typedef struct {
-    uint xmin;
-    uint ymin;
-    uint xmax;
-    uint ymax;
+    int xmin;
+    int ymin;
+    int xmax;
+    int ymax;
 } bbox_t;
 
 void get_bbox(vec3f_t p1, vec3f_t p2, vec3f_t p3, bbox_t *result) {
@@ -54,12 +54,14 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
 
     get_bbox(p1.position, p2.position, p3.position, &bbox);
 
-    if (bbox.xmax > self->framebuffer->width)  bbox.xmax = self->framebuffer->width;
-    if (bbox.ymax > self->framebuffer->height) bbox.ymax = self->framebuffer->height;
+    if (bbox.xmin < 0) bbox.xmin = 0;
+    if (bbox.ymin < 0) bbox.ymin = 0;
+    if (bbox.xmax > (int)self->framebuffer->width)  bbox.xmax = self->framebuffer->width;
+    if (bbox.ymax > (int)self->framebuffer->height) bbox.ymax = self->framebuffer->height;
 
     // iterate over all points to consider if they're in the triangle
-    for (uint y = bbox.ymin; y < bbox.ymax; ++y) {
-        for (uint x = bbox.xmin; x < bbox.xmax; ++x) {
+    for (int y = bbox.ymin; y < bbox.ymax; ++y) {
+        for (int x = bbox.xmin; x < bbox.xmax; ++x) {
             fragment_t frag = {
                 .screen = {x, y, 0},
                 .color = {0.0f, 0.0f, 0.0f, 1.0f}
