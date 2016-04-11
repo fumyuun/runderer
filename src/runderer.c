@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <float.h>
+#include <math.h>
 
 #define RUNDERER_FRAGBUF_N 1024*1024
 

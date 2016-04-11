@@ -1,4 +1,6 @@
 #include <assert.h>
+#include <stdio.h>
+#include <math.h>
 #include "rasterizer.h"
 #include "vector.h"
 #include "math.h"

@@ -15,12 +15,6 @@
 #include <SDL2/SDL.h>
 #endif /* FB_SDL */
 
-void main_delay(unsigned int ms) {
-    #ifdef FB_SDL
-    SDL_Delay(ms);
-    #endif /* FB_SDL */
-}
-
 int main (int argc, char **argv) {
     int error;
     framebuffer_t fb;
