@@ -11,9 +11,7 @@
 #define SCREEN_W 640
 #define SCREEN_H 480
 
-#ifdef FB_SDL
 #include <SDL2/SDL.h>
-#endif /* FB_SDL */
 
 int main (int argc, char **argv) {
     int error;

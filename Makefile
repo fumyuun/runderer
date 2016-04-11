@@ -1,7 +1,10 @@
-CFLAGS=$(shell sdl2-config --cflags) -Iinclude -g -Wall -Wextra -pedantic -DFB_SDL
+CFLAGS=$(shell sdl2-config --cflags) -Iinclude -g -Wall -Wextra -pedantic
 LDFLAGS=$(shell sdl2-config --libs) -lm
 
-main:	main.o framebuffer_sdl.o math.o runderer.o matrix.o rasterizer.o glapi.o
+main:	main.o runderer.a framebuffer_sdl.o
+
+runderer.a: math.o runderer.o matrix.o rasterizer.o glapi.o
+	ar rcs $@ $^
 
 %.o:	src/%.c
 	$(CC) -c -o $@ $^ $(CFLAGS)
