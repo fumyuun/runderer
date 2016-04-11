@@ -18,9 +18,13 @@
 #include <stdint.h>
 #include "vector.h"
 
-#ifdef FB_SDL
-#include "framebuffer/framebuffer_sdl.h"
-#endif /* FB_SDL */
+typedef struct {
+    unsigned int width;
+    unsigned int height;
+    void *opaque;
+    void *buf;
+    uint16_t *buf16;
+} framebuffer_t;
 
 /**
  * \brief Initialize the framebuffer emulation driver to a given screen size.
