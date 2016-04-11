@@ -21,7 +21,7 @@ int framebuffer_init(framebuffer_t *fb, unsigned int width, unsigned int height)
         return 1;
     }
 
-    sdl_fb_t *sdl_fb = malloc(sizeof(sdl_fb));
+    sdl_fb_t *sdl_fb = malloc(sizeof(sdl_fb_t));
     if (sdl_fb == NULL) {
         printf("Couldnt allocate opaque struct\n");
         SDL_Quit();
