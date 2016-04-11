@@ -24,7 +24,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
         return 2;
     }
 
-    for (uint i = 0; i < fb->width * fb->height; ++i) {
+    for (unsigned int i = 0; i < fb->width * fb->height; ++i) {
         run->zbuffer[i] = FLT_MIN;
     }
 
@@ -55,10 +55,10 @@ void runderer_unbind(runderer_t *run) {
 }
 
 void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
-                                  uint count) {
-  for (uint i = 0; i < count; i++) {
+                                  unsigned int count) {
+  for (unsigned int i = 0; i < count; i++) {
     stream_t verts[3];
-    for (uint j = 0; j < 3; j++) {
+    for (unsigned int j = 0; j < 3; j++) {
       verts[j] =
           self->vertex_shader(vertices[i * 3 + j], self->model_matrix,
                               self->view_matrix, self->projection_matrix, self->viewport_matrix);
@@ -66,7 +66,7 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
     fragment_t *begin = &self->fragbuf[0];
     fragment_t *end = begin + RUNDERER_FRAGBUF_N;
     self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end);
-    uint const frags_drawn = (uint)(end - begin);
+    unsigned int const frags_drawn = (unsigned int)(end - begin);
     self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
   }
 }
@@ -103,12 +103,12 @@ static uint16_t rgb3f_to_rgb565(vec3f_t const color){
 }
 
 void runderer_fragment_shader_flat(const fragment_t *frag_buf,
-                                   uint frags_to_process,
+                                   unsigned int frags_to_process,
                                    framebuffer_t *frame) {
-  for (uint i = 0; i < frags_to_process; ++i) {
+  for (unsigned int i = 0; i < frags_to_process; ++i) {
     fragment_t const frag = frag_buf[i];
-    uint const x = (uint)(frag.screen[0]);
-    uint const y = (uint)(frag.screen[1]);
+    unsigned int const x = (unsigned int)(frag.screen[0]);
+    unsigned int const y = (unsigned int)(frag.screen[1]);
     frame->buf16[y * frame->width + x] = rgb3f_to_rgb565(frag.color);
   }
 }
