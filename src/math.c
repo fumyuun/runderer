@@ -15,12 +15,12 @@ void math_barycentric3f(vec3f_t a, vec3f_t b, vec3f_t c, vec3f_t p, vec3f_t resu
     vec3f_t y;
     vec3f_t cross;
 
-    x[0] = b[0] - a[0];
-    x[1] = c[0] - a[0];
+    x[0] = c[0] - a[0];
+    x[1] = b[0] - a[0];
     x[2] = a[0] - p[0];
 
-    y[0] = b[1] - a[1];
-    y[1] = c[1] - a[1];
+    y[0] = c[1] - a[1];
+    y[1] = b[1] - a[1];
     y[2] = a[1] - p[1];
 
     math_cross3f(x, y, cross);
