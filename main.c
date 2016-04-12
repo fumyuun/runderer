@@ -32,16 +32,19 @@ int main (int argc, char **argv) {
         return 2;
     }
 
-    vertex_t vert[3] = {
+    vertex_t vert[] = {
         {
-            .position = {0.0f, -1.0f, 0.0f, 1.0f},
+            .position = {-1.0f, -1.0f, 0.0f, 1.0f},
             .color    = {1.0f, 0.0f, 0.0f, 1.0f}
         },{
-            .position = {1.0f, 1.0f, 0.0f, 1.0f},
+            .position = {1.0f, -1.0f, 0.0f, 1.0f},
             .color    = {0.0f, 1.0f, 0.0f, 1.0f}
         },{
-            .position = {-1.0f, 1.0f, 0.0f, 1.0f},
+            .position = {1.0f, 1.0f, 0.0f, 1.0f},
             .color    = {0.0f, 0.0f, 1.0f, 1.0f}
+        },{
+            .position = {-1.0f, 1.0f, 0.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 1.0f, 1.0f}
         }
     };
 
@@ -51,6 +54,7 @@ int main (int argc, char **argv) {
     mat_identity(run.viewport_matrix);
 
     run.draw_triangle_array = runderer_draw_triangle_array;
+    run.draw_quad_array = runderer_draw_quad_array;
     run.vertex_shader = runderer_vertex_shader;
     run.triangle_rasterizer = rasterize_triangle;
     run.fragment_shader = runderer_fragment_shader_flat;
@@ -72,7 +76,7 @@ int main (int argc, char **argv) {
 
         glRotatef(0.1f * M_PI, 0.0f, 0.0f, 1.0f);
 
-        runderer_draw_triangle_array(&run, vert, 1);
+        runderer_draw_quad_array(&run, vert, 1);
 
         framebuffer_flip(&fb);
     }

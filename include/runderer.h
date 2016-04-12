@@ -19,6 +19,9 @@ struct runderer;
 typedef void (*draw_triangle_array_func_t)
 (struct runderer* self, vertex_t const* vertices, unsigned int count);
 
+typedef void (*draw_quad_array_func_t)
+(struct runderer* self, vertex_t const* vertices, unsigned int count);
+
 typedef stream_t (*vertex_shader_func_t)
 (vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix, mat4f_t viewport_matrix);
 
@@ -45,7 +48,8 @@ typedef struct runderer {
 
 	fragment_t *fragbuf;
 
-	draw_triangle_array_func_t draw_triangle_array;
+    draw_triangle_array_func_t draw_triangle_array;
+    draw_quad_array_func_t draw_quad_array;
 	vertex_shader_func_t vertex_shader;
 	triangle_rasterizer_func_t triangle_rasterizer;
 	line_rasterizer_func_t line_rasterizer;
@@ -68,6 +72,7 @@ void runderer_unbind(runderer_t *run);
 
 stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix, mat4f_t viewport_matrix);
 void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, unsigned int count);
+void runderer_draw_quad_array(runderer_t* self, vertex_t const* vertices, unsigned int count);
 void runderer_fragment_shader_flat(fragment_t const * frag_buf, unsigned int frags_to_process, framebuffer_t* frame);
 
 void perspective(float field_of_view, float aspect_ratio, float n, float f,

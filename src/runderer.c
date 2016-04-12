@@ -72,6 +72,25 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
   }
 }
 
+void runderer_draw_quad_array(runderer_t *self, const vertex_t *vertices,
+                                  unsigned int count) {
+  for (unsigned int i = 0; i < count; i++) {
+    stream_t verts[4];
+    for (unsigned int j = 0; j < 4; j++) {
+      verts[j] =
+          self->vertex_shader(vertices[i * 4 + j], self->model_matrix,
+                              self->view_matrix, self->projection_matrix, self->viewport_matrix);
+    }
+    fragment_t *begin = &self->fragbuf[0];
+    fragment_t *end1 = begin + RUNDERER_FRAGBUF_N;
+    fragment_t *end2 = begin + RUNDERER_FRAGBUF_N;
+    self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end1);
+    self->triangle_rasterizer(self, verts[2], verts[3], verts[0], end1, &end2);
+    unsigned int const frags_drawn = (unsigned int)(end2 - begin);
+    self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
+  }
+}
+
 stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix,
                                 mat4f_t view_matrix,
                                 mat4f_t projection_matrix,
