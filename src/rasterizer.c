@@ -75,7 +75,7 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
 
             // if any component of the bc coordinates is negative, the point is not inside the triangle
             math_barycentric3f(p1.position, p2.position, p3.position, frag.screen, bc);
-            assert(fabsf(bc[0] + bc[1] + bc[2] - 1.0f) < 0.001f);
+            assert(fabsf(bc[0] + bc[1] + bc[2] - 1.0f) < 0.01f);
 
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 assert(frag_buf_current < *frag_buf_end);

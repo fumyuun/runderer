@@ -122,6 +122,9 @@ int main (int argc, char **argv) {
     runderer_activate(&run);
     glViewport(0, 0, SCREEN_W, SCREEN_H);
 
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
     int quit = 0;
     SDL_Event event;
     uint32_t now = SDL_GetTicks();
