@@ -34,20 +34,49 @@ int main (int argc, char **argv) {
 
     vertex_t vert[] = {
         {
-            .position = {-1.0f, -1.0f, 0.0f, 1.0f},
+            .position = {-0.5f, 0.0f, -0.5f, 1.0f},
             .color    = {1.0f, 0.0f, 0.0f, 1.0f}
         },{
-            .position = {1.0f, -1.0f, 0.0f, 1.0f},
+            .position = {0.0f, -0.5f, 0.0f, 1.0f},
+            .color    = {1.0f, 0.0f, 0.0f, 1.0f}
+        },{
+            .position = {0.5f, 0.0f, -0.5f, 1.0f},
+            .color    = {1.0f, 0.0f, 0.0f, 1.0f}
+        },
+
+        {
+            .position = {0.5f, 0.0f, -0.5f, 1.0f},
             .color    = {0.0f, 1.0f, 0.0f, 1.0f}
         },{
-            .position = {1.0f, 1.0f, 0.0f, 1.0f},
+            .position = {0.0f, -0.5f, 0.0f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },{
+            .position = {0.5f, 0.0f, 0.5f, 1.0f},
+            .color    = {0.0f, 1.0f, 0.0f, 1.0f}
+        },
+
+        {
+            .position = {0.5f, 0.0f, 0.5f, 1.0f},
             .color    = {0.0f, 0.0f, 1.0f, 1.0f}
         },{
-            .position = {-1.0f, 1.0f, 0.0f, 1.0f},
-            .color    = {0.0f, 1.0f, 1.0f, 1.0f}
+            .position = {0.0f, -0.5f, 0.0f, 1.0f},
+            .color    = {0.0f, 0.0f, 1.0f, 1.0f}
+        },{
+            .position = {-0.5f, 0.0f, 0.5f, 1.0f},
+            .color    = {0.0f, 0.0f, 1.0f, 1.0f}
+        },
+
+        {
+            .position = {-0.5f, 0.0f, 0.5f, 1.0f},
+            .color    = {1.0f, 0.0f, 1.0f, 1.0f}
+        },{
+            .position = {0.0f, -0.5f, 0.0f, 1.0f},
+            .color    = {1.0f, 0.0f, 1.0f, 1.0f}
+        },{
+            .position = {-0.5f, 0.0f, -0.5f, 1.0f},
+            .color    = {1.0f, 0.0f, 1.0f, 1.0f}
         }
     };
-
     mat_identity(run.model_matrix);
     mat_identity(run.view_matrix);
     mat_identity(run.projection_matrix);
@@ -62,6 +91,9 @@ int main (int argc, char **argv) {
     runderer_activate(&run);
     glViewport(0, 0, SCREEN_W, SCREEN_H);
 
+
+    glRotatef(0.1f * M_PI, -1.0f, 0.0f, 0.0f);
+
     int quit = 0;
     SDL_Event event;
     while (!quit) {
@@ -74,11 +106,12 @@ int main (int argc, char **argv) {
 
         framebuffer_clear(&fb);
 
-        glRotatef(0.1f * M_PI, 0.0f, 0.0f, 1.0f);
+        glRotatef(0.1f * M_PI, 0.0f, 1.0f, 0.0f);
 
-        runderer_draw_quad_array(&run, vert, 1);
+        runderer_draw_triangle_array(&run, vert, 4);
 
         framebuffer_flip(&fb);
+        SDL_Delay(100);
     }
     runderer_unbind(&run);
 
