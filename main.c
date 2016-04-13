@@ -144,7 +144,7 @@ int main (int argc, char **argv) {
         glRotatef(dt * sinf(current_time) * M_PIF, 0.0f, 1.0f, 0.0f);
         glRotatef(dt * cosf(current_time) * M_PIF, 1, 0, 0);
 
-        framebuffer_clear(&fb);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         runderer_draw_triangle_array(&run, pyramid_head, 4);
         runderer_draw_quad_array(&run, pyramid_ass, 1);

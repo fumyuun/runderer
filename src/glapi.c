@@ -1,8 +1,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+#include <float.h>
 #include "glapi.h"
 #include "runderer.h"
+#include "framebuffer.h"
 
 // the static main instance of our runderer
 static runderer_t *runderer = NULL;
@@ -79,5 +81,16 @@ void glCullFace(int mode) {
             break;
         default:
             printf("Invalid glCullFace %d\n", mode);
+    }
+}
+
+void glClear(int mask) {
+    if (mask & GL_COLOR_BUFFER_BIT) {
+        framebuffer_clear(runderer->framebuffer);
+    }
+    if (mask & GL_DEPTH_BUFFER_BIT) {
+        for (unsigned int i = 0; i < runderer->framebuffer->width * runderer->framebuffer->height; ++i) {
+            runderer->zbuffer[i] = FLT_MAX;
+        }
     }
 }

@@ -58,7 +58,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
     }
 
     for (unsigned int i = 0; i < fb->width * fb->height; ++i) {
-        run->zbuffer[i] = FLT_MIN;
+        run->zbuffer[i] = FLT_MAX;
     }
 
     run->fragbuf = malloc(RUNDERER_FRAGBUF_N * sizeof(fragment_t));
