@@ -103,7 +103,7 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
     fragment_t *end = begin + RUNDERER_FRAGBUF_N;
     self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end);
     unsigned int const frags_drawn = (unsigned int)(end - begin);
-    self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
+    self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer, self->zbuffer);
   }
 }
 
@@ -124,7 +124,7 @@ void runderer_draw_quad_array(runderer_t *self, const vertex_t *vertices,
     self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end1);
     self->triangle_rasterizer(self, verts[2], verts[3], verts[0], end1, &end2);
     unsigned int const frags_drawn = (unsigned int)(end2 - begin);
-    self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer);
+    self->fragment_shader(self->fragbuf, frags_drawn, self->framebuffer, self->zbuffer);
   }
 }
 
@@ -161,12 +161,17 @@ static uint16_t rgb3f_to_rgb565(vec3f_t const color){
 
 void runderer_fragment_shader_flat(const fragment_t *frag_buf,
                                    unsigned int frags_to_process,
-                                   framebuffer_t *frame) {
+                                   framebuffer_t *frame,
+                                   ZBUF_TYPE* zbuffer) {
   for (unsigned int i = 0; i < frags_to_process; ++i) {
     fragment_t const frag = frag_buf[i];
     unsigned int const x = (unsigned int)(frag.screen[0]);
     unsigned int const y = (unsigned int)(frag.screen[1]);
-    frame->buf16[y * frame->width + x] = rgb3f_to_rgb565(frag.color);
+    float const z = frag.screen[2];
+    if (z < zbuffer[y * frame->width + x]) {
+      zbuffer[y * frame->width + x] = z;
+      frame->buf16[y * frame->width + x] = rgb3f_to_rgb565(frag.color);
+    }
   }
 }
 

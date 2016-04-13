@@ -32,7 +32,7 @@ typedef void (*line_rasterizer_func_t)
 (stream_t p1, stream_t p2, fragment_t* frag_buf_begin, fragment_t* frag_buf_end);
 
 typedef void (*fragment_shader_func_t)
-(fragment_t const * frag_buf, unsigned int frags_to_process, framebuffer_t* frame);
+(fragment_t const * frag_buf, unsigned int frags_to_process, framebuffer_t* frame, ZBUF_TYPE* zbuffer);
 
 typedef struct runderer {
 	framebuffer_t* framebuffer;
@@ -75,7 +75,7 @@ void runderer_unbind(runderer_t *run);
 stream_t runderer_vertex_shader(vertex_t vertex, mat4f_t model_matrix, mat4f_t view_matrix, mat4f_t projection_matrix, mat4f_t viewport_matrix);
 void runderer_draw_triangle_array(runderer_t* self, vertex_t const* vertices, unsigned int count);
 void runderer_draw_quad_array(runderer_t* self, vertex_t const* vertices, unsigned int count);
-void runderer_fragment_shader_flat(fragment_t const * frag_buf, unsigned int frags_to_process, framebuffer_t* frame);
+void runderer_fragment_shader_flat(fragment_t const * frag_buf, unsigned int frags_to_process, framebuffer_t* frame, ZBUF_TYPE* zbuffer);
 
 void perspective(float field_of_view, float aspect_ratio, float n, float f,
                  mat4f_t mat);

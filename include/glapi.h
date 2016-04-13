@@ -9,25 +9,26 @@
 #include "runderer.h"
 
 enum {
-	// matrix modes
-	GL_MODELVIEW,
-	GL_PROJECTION
+    // matrix modes
+    GL_MODELVIEW,
+    GL_PROJECTION
 };
 
 enum {
-	// enable modes
-	GL_CULL_FACE      = 0x01,
+    // enable modes
+    GL_CULL_FACE      = 0x01,
+    GL_DEPTH_TEST     = 0x02,
 
-	// culling modes
-	GL_FRONT          = 0x02,
-	GL_BACK           = 0x04,
-	GL_FRONT_AND_BACK = 0x08
+    // culling modes
+    GL_FRONT          = 0x10,
+    GL_BACK           = 0x20,
+    GL_FRONT_AND_BACK = 0x30
 };
 
 enum {
-	// clear bits
-	GL_COLOR_BUFFER_BIT = 0x01,
-	GL_DEPTH_BUFFER_BIT = 0x02
+    // clear bits
+    GL_COLOR_BUFFER_BIT = 0x01,
+    GL_DEPTH_BUFFER_BIT = 0x02
 };
 
 /**
