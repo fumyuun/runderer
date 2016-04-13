@@ -5,8 +5,40 @@
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
+#include <stdio.h>
 
 #define RUNDERER_FRAGBUF_N 1024*1024
+
+static int const do_print_stream = 0;
+
+void print_vec3f(vec3f_t const v);
+void print_vec4f(vec4f_t const v);
+void print_stream(stream_t const s);
+void print_stream_array(stream_t const * begin, stream_t const * end);
+
+void print_vec3f(vec3f_t const v){
+    printf("[%8.2f %8.2f %8.2f]", v[0], v[1], v[2]);
+}
+
+void print_vec4f(vec4f_t const v){
+    printf("[%8.2f %8.2f %8.2f %8.2f]", v[0], v[1], v[2], v[3]);
+}
+
+void print_stream(stream_t const s){
+  printf("Position: ");
+  print_vec3f(s.position);
+  printf(" Color: ");
+  print_vec4f(s.color);
+}
+
+void print_stream_array(stream_t const * begin, stream_t const * end){
+  unsigned int size = (unsigned int)(end - begin);
+  for(unsigned int i = 0; i < size; ++i){
+      printf("Stream[%d]: ", i);
+      print_stream(begin[i]);
+      printf("\n");
+  }
+}
 
 /**
  * Bind the runderer instance to a framebuffer driver
@@ -65,6 +97,8 @@ void runderer_draw_triangle_array(runderer_t *self, const vertex_t *vertices,
           self->vertex_shader(vertices[i * 3 + j], self->model_matrix,
                               self->view_matrix, self->projection_matrix, self->viewport_matrix);
     }
+    if (do_print_stream) { print_stream_array(&verts[0], &verts[3]); }
+
     fragment_t *begin = &self->fragbuf[0];
     fragment_t *end = begin + RUNDERER_FRAGBUF_N;
     self->triangle_rasterizer(self, verts[0], verts[1], verts[2], begin, &end);
@@ -82,6 +116,8 @@ void runderer_draw_quad_array(runderer_t *self, const vertex_t *vertices,
           self->vertex_shader(vertices[i * 4 + j], self->model_matrix,
                               self->view_matrix, self->projection_matrix, self->viewport_matrix);
     }
+    if (do_print_stream) { print_stream_array(&verts[0], &verts[4]); }
+
     fragment_t *begin = &self->fragbuf[0];
     fragment_t *end1 = begin + RUNDERER_FRAGBUF_N;
     fragment_t *end2 = begin + RUNDERER_FRAGBUF_N;
