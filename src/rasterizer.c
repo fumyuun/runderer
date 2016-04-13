@@ -4,6 +4,7 @@
 #include "rasterizer.h"
 #include "vector.h"
 #include "math.h"
+#include "glapi.h"
 
 typedef struct {
     int xmin;
@@ -33,18 +34,26 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
     float intensity; // the light intensity
     bbox_t bbox;     // the bounding box of our triangle
 
-    // compute and normalize our face normal
-    math_normal(p1.position, p2.position, p3.position, normal);
-    math_normalize(normal);
+    // Check if we need to cull this face
+    if (self->active_mode & GL_CULL_FACE) {
+        if (self->active_mode & GL_FRONT_AND_BACK) {
+            // Front and back culling enabled, bye bye
+            *frag_buf_end = frag_buf_begin;
+            return;
+        }
+        // compute and normalize our face normal
+        math_normal(p1.position, p2.position, p3.position, normal);
+        math_normalize(normal);
 
-    // the light intensity
-    intensity = math_dotproduct(normal, self->eye_direction);
+        // the light intensity
+        intensity = math_dotproduct(normal, self->eye_direction);
 
-    // our light intensity is negative if we have a back face
-    if (intensity < 0.0f) {
-        printf("Culled back-face\n");
-        *frag_buf_end = frag_buf_begin;
-        return;
+        // our light intensity is negative if we have a back face
+        if ((intensity < 0.0f && (self->active_mode & GL_BACK)) ||
+            (intensity >= 0.0f && (self->active_mode & GL_FRONT))) {
+            *frag_buf_end = frag_buf_begin;
+            return;
+        }
     }
 
     fragment_t* frag_buf_current = frag_buf_begin;

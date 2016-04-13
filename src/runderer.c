@@ -40,6 +40,7 @@ int runderer_bind(runderer_t *run, framebuffer_t *fb) {
     run->eye_direction[2] = -1.0f;
 
     run->active_matrix = &run->model_matrix;
+    run->active_mode = 0;
 
     return 0;
 }

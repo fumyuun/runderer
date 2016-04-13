@@ -45,3 +45,39 @@ void glRotatef(float angle, float x, float y, float z) {
     mat_mult_mat4f(runderer->model_matrix, rot, rotated);
     memcpy(runderer->model_matrix, rotated, 4 * 4 * sizeof(float));
 }
+
+void glEnable(int mode) {
+    switch (mode) {
+        case GL_CULL_FACE:
+            runderer->active_mode |= mode;
+            break;
+        default:
+            printf("Invalid glEnable %d\n", mode);
+            break;
+    }
+}
+
+void glDisable(int mode) {
+    switch (mode) {
+        case GL_CULL_FACE:
+            runderer->active_mode &= ~mode;
+            break;
+        default:
+            printf("Invalid glDisable %d\n", mode);
+            break;
+    }
+}
+
+void glCullFace(int mode) {
+    static int mask = ~(GL_FRONT | GL_BACK | GL_FRONT_AND_BACK);
+    switch (mode) {
+        case GL_FRONT:
+        case GL_BACK:
+        case GL_FRONT_AND_BACK:
+            runderer->active_mode &= mask;
+            runderer->active_mode |= mode;
+            break;
+        default:
+            printf("Invalid glCullFace %d\n", mode);
+    }
+}

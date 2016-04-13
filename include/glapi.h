@@ -9,8 +9,19 @@
 #include "runderer.h"
 
 enum {
+	// matrix modes
     GL_MODELVIEW,
     GL_PROJECTION
+};
+
+enum {
+    // enable modes
+    GL_CULL_FACE      = 0x01,
+
+    // culling modes
+    GL_FRONT          = 0x02,
+    GL_BACK           = 0x04,
+    GL_FRONT_AND_BACK = 0x08
 };
 
 /**
@@ -25,5 +36,10 @@ void glMatrixMode(int mode);
 void glViewport(int x, int y, int w, int h);
 
 void glRotatef(float angle, float x, float y, float z);
+
+void glEnable(int mode);
+void glDisable(int mode);
+
+void glCullFace(int mode);
 
 #endif /* GLAPI_H */
