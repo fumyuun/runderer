@@ -127,7 +127,8 @@ int main (int argc, char **argv) {
 
     int quit = 0;
     SDL_Event event;
-    uint32_t now = SDL_GetTicks();
+    uint32_t now = SDL_GetTicks(), begin, end;
+
     while (!quit) {
         while (SDL_PollEvent(&event)) {
             switch(event.type) {
@@ -146,8 +147,12 @@ int main (int argc, char **argv) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        begin = SDL_GetTicks();
         runderer_draw_triangle_array(&run, pyramid_head, 4);
         runderer_draw_quad_array(&run, pyramid_ass, 1);
+        end = SDL_GetTicks();
+
+        printf("Delta: %d, FPS: %f\n", end - begin, 1000.0f / (end - begin));
 
         framebuffer_flip(&fb);
     }

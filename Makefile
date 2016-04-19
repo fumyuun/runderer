@@ -3,7 +3,7 @@ LDFLAGS=$(shell sdl2-config --libs) -lm
 
 main:	main.o runderer.a framebuffer_sdl.o
 
-runderer.a: math.o runderer.o matrix.o rasterizer.o glapi.o
+runderer.a: vector_math.o runderer.o matrix.o rasterizer.o glapi.o
 	ar rcs $@ $^
 
 %.o:	src/%.c

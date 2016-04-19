@@ -3,7 +3,7 @@
 #include <math.h>
 #include "rasterizer.h"
 #include "vector.h"
-#include "math.h"
+#include "vector_math.h"
 #include "glapi.h"
 
 void get_bbox(vec3f_t p1, vec3f_t p2, vec3f_t p3, bbox_t *result) {
