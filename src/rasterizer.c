@@ -25,11 +25,10 @@ void get_bbox(vec3f_t p1, vec3f_t p2, vec3f_t p3, bbox_t *result) {
     if (result->ymin > p3[1]) result->ymin = p3[1];
     if (result->xmax < p3[0]) result->xmax = p3[0];
     if (result->ymax < p3[1]) result->ymax = p3[1];
-
 }
 
 void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_t p3, fragment_t* frag_buf_begin, fragment_t** frag_buf_end) {
-    vec3f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
+    vec4f_t bc;      // the barycentric cordinate of p with respect to triangle p1p2p3
     vec3f_t normal;  // the face normal of triangle p1p2p3
     float intensity; // the light intensity
     bbox_t bbox;     // the bounding box of our triangle
@@ -74,14 +73,13 @@ void rasterize_triangle(struct runderer* self, stream_t p1, stream_t p2, stream_
             };
 
             // if any component of the bc coordinates is negative, the point is not inside the triangle
-            math_barycentric3f(p1.position, p2.position, p3.position, frag.screen, bc);
-            assert(fabsf(bc[0] + bc[1] + bc[2] - 1.0f) < 0.01f);
+            math_barycentric3f_denorm(p1.position, p2.position, p3.position, frag.screen, bc);
 
             if (bc[0] >= 0.0f && bc[1] >= 0.0f && bc[2] >= 0.0f) {
                 assert(frag_buf_current < *frag_buf_end);
-                frag.screen[2] = p1.position[2] * bc[0] + p2.position[2] * bc[1] + p3.position[2] * bc[2];
+                frag.screen[2] = (p1.position[2] * bc[0] + p2.position[2] * bc[1] + p3.position[2] * bc[2]) / bc[3];
                 for(unsigned int i = 0; i < 4; ++i){
-                    frag.color[i] = p1.color[i] * bc[0] + p2.color[i] * bc[1] + p3.color[i] * bc[2];
+                    frag.color[i] = (p1.color[i] * bc[0] + p2.color[i] * bc[1] + p3.color[i] * bc[2]) / bc[3];
                 }
                 *frag_buf_current++ = frag;
             }
